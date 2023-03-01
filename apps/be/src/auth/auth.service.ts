@@ -4,6 +4,10 @@ import * as bcrypt from 'bcrypt';
 import { UserService } from '../user/user.service';
 import { LogInDto } from './dto/login.dto';
 import { SignUpDto } from './dto/sign-up.dto';
+import {
+  ACCESS_TOKEN_LIFETIME,
+  REFRESH_TOKEN_LIFETIME,
+} from '@code/shared/constants/token';
 
 @Injectable()
 export class AuthService {
@@ -22,10 +26,10 @@ export class AuthService {
     delete user.password;
 
     const accessToken = this.jwtSerivce.sign(user, {
-      expiresIn: 900, //15min
+      expiresIn: ACCESS_TOKEN_LIFETIME,
     });
     const refreshToken = this.jwtSerivce.sign(user, {
-      expiresIn: '7d',
+      expiresIn: REFRESH_TOKEN_LIFETIME,
     });
 
     await this.userService.update(user.id, { refreshToken });
@@ -51,10 +55,10 @@ export class AuthService {
     delete newUser.password;
 
     const accessToken = this.jwtSerivce.sign(newUser, {
-      expiresIn: 900, //15min
+      expiresIn: ACCESS_TOKEN_LIFETIME,
     });
     const refreshToken = this.jwtSerivce.sign(newUser, {
-      expiresIn: '7d',
+      expiresIn: REFRESH_TOKEN_LIFETIME,
     });
 
     await this.userService.update(newUser.id, { refreshToken });
