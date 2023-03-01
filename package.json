@@ -13,7 +13,9 @@
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/platform-fastify": "^9.3.8",
     "@nrwl/next": "15.7.0",
+    "@prisma/client": "^4.11.0",
     "axios": "^1.0.0",
+    "bcrypt": "^5.1.0",
     "next": "13.1.1",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
@@ -40,6 +42,7 @@
     "@nrwl/webpack": "15.7.0",
     "@nrwl/workspace": "15.7.0",
     "@testing-library/react": "13.4.0",
+    "@types/bcrypt": "^5.0.0",
     "@types/jest": "28.1.1",
     "@types/node": "18.11.9",
     "@types/passport-jwt": "^3.0.8",
@@ -65,5 +68,8 @@
     "ts-jest": "28.0.5",
     "ts-node": "10.9.1",
     "typescript": "~4.8.2"
+  },
+  "prisma": {
+    "schema": "./apps/be/prisma/schema.prisma"
   }
 }

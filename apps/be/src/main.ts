@@ -11,14 +11,20 @@ import {
 } from '@nestjs/platform-fastify';
 
 import { AppModule } from './app/app.module';
+import { PrismaService } from './prisma/prisma.service';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
     new FastifyAdapter()
   );
+
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
+
+  const prismaService = app.get(PrismaService);
+  await prismaService.enableShutdownHooks(app);
+
   const port = process.env.PORT || 3001;
   await app.listen(port);
   Logger.log(
