@@ -5,6 +5,7 @@
   "scripts": {},
   "private": true,
   "dependencies": {
+    "@fastify/static": "^6.9.0",
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/jwt": "^10.0.2",
@@ -12,6 +13,7 @@
     "@nestjs/passport": "^9.0.3",
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/platform-fastify": "^9.3.8",
+    "@nestjs/swagger": "^6.2.1",
     "@nrwl/next": "15.7.0",
     "@prisma/client": "^4.11.0",
     "axios": "^1.0.0",
