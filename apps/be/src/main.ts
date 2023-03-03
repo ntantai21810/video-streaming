@@ -5,20 +5,20 @@
 
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import {
-  FastifyAdapter,
-  NestFastifyApplication,
-} from '@nestjs/platform-fastify';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 
 import { AppModule } from './app/app.module';
 import { PrismaService } from './prisma/prisma.service';
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestFastifyApplication>(
+  const app = await NestFactory.create(
     AppModule,
-    new FastifyAdapter()
+    { logger: false }
+    // new FastifyAdapter({ logger: false })
   );
+
+  app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
 
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
@@ -26,27 +26,9 @@ async function bootstrap() {
   const prismaService = app.get(PrismaService);
   await prismaService.enableShutdownHooks(app);
 
-  // app.register(helmet, {
-  //   contentSecurityPolicy: {
-  //     directives: {
-  //       defaultSrc: [`'self'`],
-  //       styleSrc: [`'self'`, `'unsafe-inline'`],
-  //       imgSrc: [`'self'`, 'data:', 'validator.swagger.io'],
-  //       scriptSrc: [`'self'`, `https: 'unsafe-inline'`],
-  //     },
-  //   },
-  // });
-
-  // // If you are not going to use CSP at all, you can use this:
-  // app.register(helmet, {
-  //   contentSecurityPolicy: false,
-  // });
-
   const config = new DocumentBuilder()
-    .setTitle('Cats example')
-    .setDescription('The cats API description')
+    .setTitle('API')
     .setVersion('1.0')
-    .addTag('cats')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
